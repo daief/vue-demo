@@ -1,28 +1,118 @@
+<!-- 知识参考：http://blog.csdn.net/u012062760/article/details/53207660 -->
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>commits example</title>
-	
+	<style>
+		#demo {
+	        font-family: 'Helvetica', Arial, sans-serif;
+	    }
+	    a {
+	        text-decoration: none;
+	        color: #f66;
+	    }
+	    li {
+	        line-height: 1.5em;
+	        margin-bottom: 20px;
+	    }
+	    .author, .date {
+	       font-weight: bold;
+	    }
+	</style>
 	<script src="../vue-2.3.4.js"></script>
 </head>
 <body>
 	<div id="demo">
-		<h1>latest vue-demo commits</h1>
+		<h1>latest Vue.js commits</h1>
+		<!-- v-for 指令根据一组数组的选项列表进行渲染。 v-for 指令需要以 item in items 形式的特殊语法， items 是源数据数组并且 item 是数组元素迭代的别名。 -->
 		<template v-for="branch in branchs">
+			<!-- v-bind  `:`是缩写，
+				对于html属性，{{ }}不能用于此。取而代之的是 v-bind
+				主要用于属性绑定,动态地绑定一个或多个特性,或一个组件 prop 到表达式。-->
 			<input type="radio" 
-				:id = "branch"
+				:id = "branch"	
 				:value = "branch"
-				:name = "branch"
-				v-model = "currentBranch" />
-			<label :for="branch">{{branch}}</label>
+				name = "branch"
+				v-model = "currentBranch" /> <!-- v-model:在表单控件或者组件上创建双向绑定  -->
+			<label :for="branch">{{ branch }}</label>
 		</template>
+
+		<p>vuejs/vue@{{ currentBranch }}</p>
+
+		<ul>
+			<li v-for="record in commits">
+				<a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
+				<!-- truncate过滤 -->
+				- <span class="message">{{ record.commit.message | truncate }}</span><br />
+				by <span class="author"><a :href="record.author.html_url" target="_blank">{{ record.commit.author.name }}</a></span>
+          		at <span class="date">{{ record.commit.author.date | formatDate }}</span>
+			</li>
+		</ul>
 	</div>
 
 
 	<script type="text/javascript">
-		var apiUrl = 'https://github.com/daief/vue-demo/commits/master'
+		var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=5&sha='
+
+		var demo = new Vue({
+			// el 提供一个在页面上已存在的 DOM 元素作为 Vue 实例的挂载目标。可以是 CSS 选择器，也可以是一个 	HTMLElement 实例。
+			// 在实例挂载之后，元素可以用 vm.$el 访问。
+			el: '#demo',
+
+			data: {
+				branchs: ['master', 'dev'],
+				currentBranch: 'master',
+				commits: null
+			},
+
+			// 生命周期钩子 created 这个钩子在实例被创建之后被调用
+			// beforeCreate : 组件实例刚被创建，组件属性计算之前（data等）
+			// craeted : 组件实例创建完成，属性已绑定，但DOM未生成，$el属性还不存在。
+			// beforeMount ： 模板编译/挂载之前
+			// mounted : 模板编译/挂载之后
+			// beforeUpdate : 组件更新之前
+			// updated : 组件更新之后
+			// activated ： for keep-alive 组件被激活时调用
+			// deactivated : for keep-alive 组件被移除时调用
+			// beforeDestroy ： 组件销毁之前
+			// destroyed : 组件销毁之后
+			created: function(){
+				this.fetchData();
+			},
+
+			// 一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。
+			// Vue 实例将会在实例化时调用 $watch()，遍历 watch 对象的每一个属性
+			watch: {
+				currentBranch: 'fetchData'
+			},
+
+			// filters : 类似shell中的管道；
+			filters: {
+				truncate: function (v) {
+			    	var newline = v.indexOf('\n')
+			     	return newline > 0 ? v.slice(0, newline) : v
+			    },
+			    formatDate: function (v) {
+			      	return v.replace(/T|Z/g, ' ')
+			    }
+			},
+
+			// 方法
+			methods: {
+		    	fetchData: function () {
+			      	var xhr = new XMLHttpRequest()
+			      	var self = this
+			      	xhr.open('GET', apiURL + self.currentBranch)
+			      	xhr.onload = function () {
+			        	self.commits = JSON.parse(xhr.responseText)
+			        	console.log(self.commits[0].html_url)
+			      	}
+			     	xhr.send()
+		    	}
+		  	}
+		})
 	</script>
 </body>
 </html>
