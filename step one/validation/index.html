@@ -9,11 +9,6 @@
 </head>
 <body>
 	<div id="app">
-		<ul>
-			<li  v-for="u in loginUsers">
-				<h3>name:{{ u.name }}--pwd:{{ u.pwd }} <button v-on:click="removeUser(u)">X</button> </h3>
-			</li>
-		</ul>
 		<!-- 修饰符（Modifiers）是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定 -->
 		<!-- .stop
 			.prevent
@@ -28,6 +23,11 @@
        	 	<li v-show="!validation.name">Name cannot be empty.</li>
         	<li v-show="!validation.pwd">Pwd cannot be empty.</li>
       	</ul>
+      	<ul>
+			<li  v-for="u in loginUsers">
+				<h3>name:{{ u.name }}--pwd:{{ u.pwd }} <button v-on:click="removeUser(u)">X</button> </h3>
+			</li>
+		</ul>
 	</div>
 
 	<script type="text/javascript">
