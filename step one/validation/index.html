@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Vue.js validation example</title>
+	<link rel="stylesheet" href="">
+	<script src="../vue-2.3.4.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li  v-for="u in loginUsers">
+				<h3>name:{{ u.name }}--pwd:{{ u.pwd }} <button v-on:click="removeUser(u)">X</button> </h3>
+			</li>
+		</ul>
+		<!-- 修饰符（Modifiers）是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定 -->
+		<!-- .stop
+			.prevent
+			.capture
+			.self -->
+		<form id="form" v-on:submit.prevent="login">
+	        <input v-model="user.name">
+	        <input v-model="user.pwd" type="password">
+	    	<input type="submit" value="login">
+	    </form>
+      	<ul class="errors">
+       	 	<li v-show="!validation.name">Name cannot be empty.</li>
+        	<li v-show="!validation.pwd">Pwd cannot be empty.</li>
+      	</ul>
+	</div>
+
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+
+			data: {
+				user: {
+					name: '',
+					pwd: ''
+				},
+				loginUsers: []
+			},
+
+			computed: {
+				validation: function(){
+					return {
+						// 连续取反使结果为true或false
+						name: !!this.user.name.trim(),	
+						pwd: !!this.user.pwd.trim(),
+					}
+				},
+				isValid: function () {
+			      	var validation = this.validation
+			      	return Object.keys(validation).every(function (key) {
+			        	return validation[key]
+			      	})
+			    }
+			},
+
+			// methods
+			methods: {
+				login: function(){
+					if (this.isValid) {
+						// alert('login success');
+						this.loginUsers.push({
+							name:this.user.name,
+							pwd:this.user.pwd
+						});
+
+						this.user.name = '';
+						this.user.pwd = '';
+					}
+				},
+				removeUser: function(user){
+					for (let i = this.loginUsers.length - 1; i >= 0; i--) {
+						if (this.loginUsers[i] == user)
+							this.loginUsers.splice(i,1);
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
