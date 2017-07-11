@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>commits example</title>
+	
+	<script src="../vue-2.3.4.js"></script>
+</head>
+<body>
+	<div id="demo">
+		<h1>latest vue-demo commits</h1>
+		<template v-for="branch in branchs">
+			<input type="radio" 
+				:id = "branch"
+				:value = "branch"
+				:name = "branch"
+				v-model = "currentBranch" />
+			<label :for="branch">{{branch}}</label>
+		</template>
+	</div>
+
+
+	<script type="text/javascript">
+		var apiUrl = 'https://github.com/daief/vue-demo/commits/master'
+	</script>
+</body>
+</html>
