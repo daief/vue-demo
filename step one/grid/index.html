@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>vue.js grid</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="../vue-2.3.4.js"></script>
+</head>
+<body>
+
+	<div id="demo">
+		<form action="" id="search">
+			Search <input type="text" name="query" v-model="searchQuery" >
+		</form>
+		<demo-grid 
+			:data="gridData"
+			:columns="gridColumns"
+			:filter-key="searchQuery">
+		</demo-grid>
+	</div>
+
+	<!-- 组件模板 -->
+	<script type="text/x-template" id="grid-template">
+		<!-- if else -->
+		<table v-if="filterData.length">
+			<thead>
+				<tr>
+					<th v-for="key in columns"
+						@click="sortBy(key)"
+						:class="{ active: sortKey == key }">
+						{{ key | capitalize }}
+						<span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="entry in filterData">
+					<td v-for="key in columns">
+						{{ entry[key] }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p v-else>No matches found.</p>
+	</script>
+
+	<script type="text/javascript">
+		Vue.component('demo-grid', {
+			template: '#grid-template',
+			replace: true,
+			// props 可以是数组或对象，用于接收来自父组件的数据
+			// 就像 data 一样，prop 可以用在模板内
+  			// 同样也可以在 vm 实例中像“this.message”这样使用
+			props: {
+				// 只检测类型,还可以进行其他验证
+				data: Array,
+				columns: Array,
+				filterKey: String
+			},
+			data: function(){
+				var sortOrders = {};
+				this.columns.forEach(function(key){
+					sortOrders[key] = 1;
+				});
+				return {
+					sortKey: '',
+					sortOrders: sortOrders
+				}
+			},
+			computed: {
+				filterData: function(){
+					var sortKey = this.sortKey;
+					var filterKey = this.filterKey && this.filterKey.toLowerCase();
+					var order = this.sortOrders[sortKey] || 1;
+					var data = this.data;
+					if (filterKey) {
+						data = data.filter(function(row){
+							return Object.keys(row).some(function(key){
+								return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+							})
+						})
+					}
+
+					if (sortKey) {
+						data = data.slice().sort(function (a,b) {
+							a = a[sortKey];
+							b = b[sortKey];
+							return (a === b ? 0 : a > b ? 1 : -1) * order;
+						})
+					}
+
+					return data;
+				}			
+			},
+			filters: {
+				capitalize: function(str) {
+					return str.charAt(0).toUpperCase() + str.slice(1);
+				}
+			},
+			methods: {
+				sortBy: function(key){
+					this.sortKey = key;
+					this.sortOrders[key] = this.sortOrders[key] * -1;
+				}
+			}
+		});
+
+		var demo = new Vue({
+		  	el: '#demo',
+		  	data: {
+		    	searchQuery: '',
+		    	gridColumns: ['name', 'power'],
+		    	gridData: [
+		      		{ name: 'Chuck Norris', power: Infinity },
+		      		{ name: 'Bruce Lee', power: 9000 },
+		      		{ name: 'Jackie Chan', power: 7000 },
+		      		{ name: 'Jet Li', power: 8000 }
+		      	]
+		  }
+		})
+	</script>
+</body>
+</html>
