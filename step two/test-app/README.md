@@ -1,3 +1,5 @@
+本例来源于[VueCnodeJS](https://github.com/shuiRong/VueCnodeJS)
+
 # test-app
 
 > A Vue.js project
