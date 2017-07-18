@@ -4,10 +4,8 @@
             <router-link :to='{name: "UserRoute",params:{name: userInfo.loginname}}'><img :src='userInfo.avatar_url'></router-link>
             <span>{{userInfo.loginname}}</span>
         </div>
-        <p>
-            <!-- <icon name='score' scale='4'></icon> -->{{userInfo.score}}</p>
-        <p>
-            <!-- <icon name='github' scale='4'></icon> -->https://github.com/{{userInfo.githubUsername}}</p>
+        <p><!-- <icon name='score' scale='4'></icon> -->{{userInfo.score}}</p>
+        <p><!-- <icon name='github' scale='4'></icon> -->https://github.com/{{userInfo.githubUsername}}</p>
     </div>
 </template>
 

@@ -35,6 +35,9 @@
 		},
 		methods: {
 			scrollMethod() {
+				if (this.loading) {
+					return;
+				}
 	            const sumH = document.body.scrollHeight;
 	            const viewH = document.documentElement.clientHeight;	// 可见区域高度
 	            const scrollH = document.body.scrollTop;
