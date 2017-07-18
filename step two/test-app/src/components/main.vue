@@ -1,5 +1,6 @@
 <template>
 	<div class="secDiv">
+		<loading-vue v-show="loading"></loading-vue>
 		<div v-for="item in content">
 			<!-- 链接到UserRoute路由，并传入{name: item.author.loginname} -->
 			<router-link :to='{name: "UserRoute",params:{name: item.author.loginname}}'>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+	import loadingVue from './loading'
 	export default {
 		name: 'MainSection',
 		data: function(){
@@ -27,6 +29,9 @@
 				limit: 10,
 				loading: true
 			}
+		},
+		components: {
+			loadingVue
 		},
 		methods: {
 			scrollMethod() {
@@ -57,11 +62,6 @@
 		mounted() {
 	        window.addEventListener('scroll', this.scrollMethod);
 	    },
-		computed: {
-	        dealTime() {
-	            return String(this.item.create_at).match(/.{10}/)[0];
-	        }
-	    },
 	    created() {
 	        this.getData();
 	    },
@@ -72,9 +72,10 @@
 	    },
 	    watch: {
 	        content(val) {
-	        	console.log(val);
+	        	
 	            if (val) {
 	                this.loading = false;
+	                console.log(this.loading);
 	            }
 	        }
 	    }
@@ -82,6 +83,7 @@
 </script>
 
 <style scoped>
+	
 	.secDiv {
 		margin: 0 auto;
 		margin-top: 4rem;
@@ -140,4 +142,6 @@
 	.stuff span:first-child {
 	    margin-right: 2rem;
 	}	
+
+
 </style>
