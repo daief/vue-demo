@@ -1,6 +1,5 @@
 <template>
 	<div class="secDiv">
-		<loading-vue v-show="loading"></loading-vue>
 		<div v-for="item in content">
 			<!-- 链接到UserRoute路由，并传入{name: item.author.loginname} -->
 			<router-link :to='{name: "UserRoute",params:{name: item.author.loginname}}'>
@@ -15,6 +14,7 @@
 	            </div>
 	        </div>
 		</div>
+		<loading-vue v-show="loading"></loading-vue>
 	</div>
 </template>
 
@@ -44,6 +44,7 @@
 	        },
 			getData() {
 	            this.limit += 10;
+	            this.loading = true;
 	            this.$http({
 	                url: 'https://cnodejs.org/api/v1/topics',
 	                method: 'get',

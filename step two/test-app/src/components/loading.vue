@@ -16,10 +16,12 @@
 
 <style scoped>
 	.loading{
+		display: flex;
 		justify-content: center !important;
         height: 40px;
         margin: 0 auto;
-        margin-top:100px;
+        margin-top:50px !important;
+        margin-bottom: 50px !important;
         border-bottom: none !important;
     }
     .loading span{
