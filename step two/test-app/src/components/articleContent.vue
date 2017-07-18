@@ -62,11 +62,14 @@
         },
         beforeCreate() {
             this.$http({
+                // this.$route.path 字符串，对应当前路由的路径，总是解析为绝对路径
                 url: `https://cnodejs.org/api/v1${this.$route.path}`,
                 method: 'get',
             }).then((res) => {
                 if (res.data.success === true) {
                     this.article = res.data.data;
+                    // 子实例可以用 this.$parent 访问父实例
+                    // 更推荐用 props 和 events 实现父子组件通信
                     this.$parent.authorName = this.article.author.loginname;
                 } else {
                     this.article = 'Sorry, Something wrong happened when getting the remote data';
@@ -103,10 +106,11 @@
     }
     
     .secDiv {
+        /*为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制*/
+        box-sizing: border-box;
         float: left;
-        width: 70%;
+        width: 73%;
         margin-top: 4rem;
-        margin-right: 0.5rem;
         background: #fff;
         border: 1px solid #ddd;
         font-size: 20px;

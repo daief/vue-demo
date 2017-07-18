@@ -1,10 +1,12 @@
 <template>
 	<div class="secDiv">
 		<div v-for="item in content">
+			<!-- 链接到UserRoute路由，并传入{name: item.author.loginname} -->
 			<router-link :to='{name: "UserRoute",params:{name: item.author.loginname}}'>
                 <img :src='item.author.avatar_url' :title='item.author.loginname'>
             </router-link>
             <div class="textDiv">
+            	<!-- 链接到ArticleRoute路由，并传入{id:item.id} -->
 	            <router-link :to='{name:"ArticleRoute",params:{id:item.id}}'>{{item.title}}</router-link>
 	            <div class='stuff'>
 	                <span>回复：{{item.reply_count}}</span>
@@ -22,14 +24,14 @@
 			return {
 				content: [],
 				item: {create_at: '2017-02-22T11:32:43.547Z'},
-				limit: 0,
+				limit: 10,
 				loading: true
 			}
 		},
 		methods: {
 			scrollMethod() {
 	            const sumH = document.body.scrollHeight;
-	            const viewH = document.documentElement.clientHeight;
+	            const viewH = document.documentElement.clientHeight;	// 可见区域高度
 	            const scrollH = document.body.scrollTop;
 	            if (viewH + scrollH === sumH) {
 	                this.getData();
@@ -70,6 +72,7 @@
 	    },
 	    watch: {
 	        content(val) {
+	        	console.log(val);
 	            if (val) {
 	                this.loading = false;
 	            }

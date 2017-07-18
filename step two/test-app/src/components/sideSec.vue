@@ -46,8 +46,9 @@
 
 <style scoped>
     .secDiv {
+        box-sizing: border-box;
         float: right;
-        width: 20%;
+        width: 23%;
         margin-top: 4rem;
         /*height: 20rem;*/
         background: #E5E9F2;
