@@ -12,9 +12,15 @@
 			<div class="model" v-show="dialogVisible" @click.self="toggleModel">
 				<div class="model-content">
 					<span>
-	                    <strong>作者: &nbsp;&nbsp;</strong>
+	                    <strong>原作者: &nbsp;&nbsp;</strong>
 	                </span>
 	                <a href='https://shuirong.github.io/' target='_blank'>林水溶</a>
+	                </span>
+	                <br />
+	                <span>
+	                    <strong>引用者: &nbsp;&nbsp;</strong>
+	                </span>
+	                <a href='https://github.com/daief/vue-demo' target='_blank'>https://github.com/daief/vue-demo</a>
 	                </span>
 	                <br>
 	                <span>
