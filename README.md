@@ -6,3 +6,6 @@ vue-demo
 ## step two
 学习[CnodeJS社区重构](https://github.com/shuiRong/VueCnodeJS)， 
 vue + vue-router 的 demo
+
+## step three
+vuex.js demo
