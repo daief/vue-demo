@@ -1,3 +1,5 @@
+原文[【vue2.0实战分享】如何在项目中引入和使用vuex](http://www.wdshare.org/article/58dc8ec813a809c753831529), [git-link](https://github.com/shifeng1993/vue-demo2)
+
 # vuex-demo
 
 > A Vue.js project
