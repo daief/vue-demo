@@ -6,6 +6,7 @@ import Hello2 from '@/components/Hello2'
 Vue.use(Router)
 
 export default new Router({
+  //mode: 'history',
   routes: [
     {
       path: '/',

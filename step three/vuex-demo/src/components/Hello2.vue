@@ -34,4 +34,7 @@ li {
 a {
   color: #42b983;
 }
+.hello {
+  max-width: 50%;
+}
 </style>

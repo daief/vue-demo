@@ -16,7 +16,6 @@
       name: 'app',
       data () {
         return {
-          routerNum: ''
         }
       },
       components: {
@@ -35,17 +34,20 @@
           this.$store.dispatch('setLoading', true)
           // 模拟请求等待
           setTimeout(() => {
-            // 页面显示
             this.$store.dispatch('setLoading', false)
 
-            this.routerNum = this.routerNum == '2' ? '' : '2';
-             
-            // 链接到一个命名路由
-            this.$router.push({ name: 'Hello' + this.routerNum})
+            if (this.$route.name == 'Hello2') {
+              // 链接到一个命名路由
+              this.$router.push({ name: 'Hello' })
+            }
+            else {
+              this.$router.push({ name: 'Hello2' })
+            }
+            
           }, time)
         },
         toggle () {
-          this.loadingtime(800)
+          this.loadingtime(1000)
         }
       }
   }
@@ -53,9 +55,10 @@
 
 <style>
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s; 
+    transition: all .8s; 
   }
   .fade-enter, .fade-leave-active {
     opacity: 0;
+    transform: scale(0.1) translate(150px,150px);
   }
 </style>
