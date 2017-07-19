@@ -2,7 +2,7 @@
   <div id="app">
     <button @click="toggle">toggle</button>
     <transition name="fade" mode="out-in">
-      <router-view v-show="showMe"></router-view>
+      <router-view></router-view>
     </transition>
     <Loading></Loading>
     
@@ -16,7 +16,7 @@
       name: 'app',
       data () {
         return {
-          showMe: false // 是否展示当前页面
+          routerNum: ''
         }
       },
       components: {
@@ -37,7 +37,11 @@
           setTimeout(() => {
             // 页面显示
             this.$store.dispatch('setLoading', false)
-            this.showMe = !this.showMe
+
+            this.routerNum = this.routerNum == '2' ? '' : '2';
+             
+            // 链接到一个命名路由
+            this.$router.push({ name: 'Hello' + this.routerNum})
           }, time)
         },
         toggle () {
