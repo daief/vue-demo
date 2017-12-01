@@ -17,11 +17,6 @@
 	                <a href='https://shuirong.github.io/' target='_blank'>林水溶</a>
 	                </span>
 	                <br />
-	                <span>
-	                    <strong>引用者: &nbsp;&nbsp;</strong>
-	                </span>
-	                <a href='https://github.com/daief/vue-demo' target='_blank'>https://github.com/daief/vue-demo</a>
-	                </span>
 	                <br>
 	                <span>
 	                    <strong>源代码: &nbsp;&nbsp;</strong>
@@ -50,14 +45,23 @@
 <script>
 	export default {
 		name: 'header',
-			data () {
-				return {
-				  dialogVisible: false
+		data () {
+			return {
+			  dialogVisible: false
 			}
 		},
 	  	methods: {
 	  		toggleModel: function() {
 	  			this.dialogVisible = !this.dialogVisible;
+	  		}
+	  	},
+	  	watch: {
+	  		dialogVisible (n, o) {
+	  			if (n) {
+	  				document.body.style.overflow = 'hidden'
+	  			} else {
+	  				document.body.style.overflow = 'scroll'
+	  			}
 	  		}
 	  	}
 	}

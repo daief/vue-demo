@@ -77,7 +77,7 @@
             }).catch((res) => {
                 console.log('ArticleCom.vue: ', res);
             });
-        },
+        }
     };
 </script>
 
